@@ -1,0 +1,7 @@
+D:\C#\Lista\Lista\bin\Debug\Lista.exe.config
+D:\C#\Lista\Lista\bin\Debug\Lista.exe
+D:\C#\Lista\Lista\bin\Debug\Lista.pdb
+D:\C#\Lista\Lista\obj\Debug\Lista.csprojAssemblyReference.cache
+D:\C#\Lista\Lista\obj\Debug\Lista.csproj.CoreCompileInputs.cache
+D:\C#\Lista\Lista\obj\Debug\Lista.exe
+D:\C#\Lista\Lista\obj\Debug\Lista.pdb
