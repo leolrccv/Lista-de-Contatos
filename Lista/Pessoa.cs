@@ -7,8 +7,8 @@
         public override string ToString() {
             string fones = "";
             foreach (Telefone t in telefone)
-                fones = fones + t.ToString();
-            return "\n>>DADOS DO CONTATO<<<\nNome:" + Nome + "\n" + fones;
+                fones += t;
+            return "\n>>DADOS DO CONTATO<<<\nNome:" + Nome + fones;
         }
     }
 }

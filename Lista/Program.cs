@@ -8,15 +8,12 @@ namespace Lista {
     class Program {
         static void Main(string[] args) {
             int opcao;
-            string nome;
-            int idade;
 
-            Pessoa pessoa;
             List<Pessoa> pessoas = new List<Pessoa>();
 
             do {
                 Console.WriteLine("\n1 - Inserir\n2 - Remover Contato\n3 - localizar um contato\n4 - imprimir os contatos\n" +
-                    "5 - Imprimir 1 por 1\n6 - Quantidade de Contatos\n0 - Sair");
+                    "5 - Imprimir 1 por 1\n6 - Quantidade de Contatos\n0 - Sair e Arquivar\n");
 
                 Console.Write("Digite a opção desejada: ");
                 opcao = int.Parse(Console.ReadLine());
@@ -24,8 +21,7 @@ namespace Lista {
 
                 switch (opcao) {
                     case 1:
-                        pessoa = InserirPessoa();
-                        pessoas.Add(pessoa);
+                        InserirPessoa(pessoas);
                         pessoas = pessoas.OrderBy(i => i.Nome).ToList();
                         break;
 
@@ -42,7 +38,6 @@ namespace Lista {
                         break;
 
                     case 5:
-                        Console.WriteLine();
                         Imprimir1(pessoas);
                         break;
 
@@ -60,15 +55,17 @@ namespace Lista {
                 }
             } while (opcao != 0);
 
-            string Path = @"D:\C#\Contatos.txt";
-            using (StreamWriter arq = new StreamWriter(Path)) {
+
+            string Path = @"..\..\..\Contatos.txt";
+            using (var streamWriter = new StreamWriter(Path, true)) {
                 foreach (Pessoa p in pessoas)
-                    arq.WriteLine(p);
+                    streamWriter.WriteLine(p);
             }
+
             Console.ReadKey();
         }
 
-        static Pessoa InserirPessoa() {
+        static void InserirPessoa(List<Pessoa> pessoas) {
 
             Console.Write("Nome: ");
             string nome = Console.ReadLine();
@@ -90,23 +87,15 @@ namespace Lista {
 
             Pessoa pessoa = new Pessoa { Nome = nome, telefone = new Telefone[] { telefone1, telefone2 } };
 
-            return pessoa;
+            pessoas.Add(pessoa);
         }
         static void RemoverPessoa(List<Pessoa> pessoas) {
-            string nome;
-            bool encontrou = false;
+            Console.Write("\nNome do contato que deseja remover: ");
+            string nome = Console.ReadLine();
 
-            Console.Write("Nome que deseja remover: ");
-            nome = Console.ReadLine();
-
-            for (var i = 0; i < pessoas.Count; i++) {
-                if (pessoas[i].Nome == nome) {
-                    pessoas.Remove(pessoas[i]);
-                    encontrou = true;
-                }
-            }
-            if (!encontrou) Console.WriteLine("Ninguém foi removido, nome não encontrado!\n");
-        } 
+            int x = pessoas.RemoveAll(p => p.Nome == nome);
+            if (x == 0) Console.WriteLine("Contato Inexistente!");
+        }
         static void AcharPessoa(List<Pessoa> pessoas) {
             string nome;
             bool encontrou = false;
@@ -116,7 +105,7 @@ namespace Lista {
 
             for (var i = 0; i < pessoas.Count; i++) {
                 if (pessoas[i].Nome == nome) {
-                    Console.WriteLine($"{nome} encontrado na posição {i+1}");
+                    Console.WriteLine($"{nome} encontrado na posição {i + 1}");
                     encontrou = true;
                 }
             }
@@ -124,10 +113,11 @@ namespace Lista {
         }
         static void Imprimir1(List<Pessoa> pessoas) {
             string resp;
+            Console.WriteLine();
+
             for (int i = 0; i < pessoas.Count; i++) {
                 Console.WriteLine(pessoas[i]);
-
-                if (i<pessoas.Count - 1) {
+                if (i < pessoas.Count - 1) {
                     Console.Write("Deseja imprimir o próximo contato?[s/n]: ");
                     resp = Console.ReadLine().ToUpper();
                     if (resp == "N") return;

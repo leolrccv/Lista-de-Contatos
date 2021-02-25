@@ -5,7 +5,7 @@
         public string Tipo { get; set; }
 
         public override string ToString() {
-            return "\n" + Tipo + "\t- " + DDD + "\t- " + Numero;
+            return $"\n{Tipo}: ({DDD}) {Numero}";
         }
     }
 }
